@@ -32,3 +32,31 @@ main {
     max-width: 55%;
 }
 
+.weather-description {
+    margin-bottom: 1rem;
+    font-size: 4rem;
+    font-weight: 500;
+    line-height: 1;
+}
+
+.weather-location {
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    font-weight: 500;
+}
+
+.weather-date {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.weather-temperature {
+    margin-bottom: 0.2rem;
+    margin-top: 2rem;
+    font-size: 6rem;
+    font-weight: 700;
+}
+
+.weather-info-icon {
+    width: 10rem;
+}
