@@ -28,6 +28,7 @@ function createWeatherInfo() {
      
     getWeather('Celje')
     .then(function(response) {
+        console.log(response);
         weatherDescription.innerHTML = response.current.condition.text;
         weatherLocation.innerHTML = response.location.name;
         weatherDate.innerHTML = response.location.localtime;
@@ -45,6 +46,8 @@ function createWeatherInfo() {
 }
 
 function createWeatherDetails() {
+    const weatherDetailsContainer = document.querySelector('.weather-details-container');
+
     const feelsLike = document.createElement('div');
     const humidity = document.createElement('div');
     const rainChance = document.createElement('div');
@@ -53,6 +56,19 @@ function createWeatherDetails() {
     const humidityIcon = document.createElement('div');
     const rainChanceIcon = document.createElement('div');
     const windIcon = document.createElement('div');
+    const feelLikeInfo = document.createElement('div');
+    const humidityInfo = document.createElement('div');
+    const rainChanceInfo = document.createElement('div');
+    const windInfo = document.createElement('div');
+    const feelsLikeLabel = document.createElement('div');
+    const humidityLabel = document.createElement('div');
+    const rainChanceLabel = document.createElement('div');
+    const windLabel = document.createElement('div');
+    const feelsLikeData = document.createElement('div');
+    const humidityData = document.createElement('div');
+    const rainChanceData = document.createElement('div');
+    const windData = document.createElement('div');
+
 
     feelsLike.setAttribute('class', 'weather-details');
     humidity.setAttribute('class', 'weather-details');
@@ -62,10 +78,59 @@ function createWeatherDetails() {
     humidityIcon.setAttribute('class', 'weather-details-icon');
     rainChanceIcon.setAttribute('class', 'weather-details-icon');
     windIcon.setAttribute('class', 'weather-details-icon');
+    feelLikeInfo.setAttribute('class', 'weather-details-info');
+    humidityInfo.setAttribute('class', 'weather-details-info');
+    rainChanceInfo.setAttribute('class', 'weather-details-info');
+    windInfo.setAttribute('class', 'weather-details-info');
+    feelsLikeLabel.setAttribute('class', 'weather-details-label');
+    humidityLabel.setAttribute('class', 'weather-details-label');
+    rainChanceLabel.setAttribute('class', 'weather-details-label');
+    windLabel.setAttribute('class', 'weather-details-label');
+    feelsLikeData.setAttribute('class', 'weather-details-data');
+    humidityData.setAttribute('class', 'weather-details-data');
+    rainChanceData.setAttribute('class', 'weather-details-data');
+    windData.setAttribute('class', 'weather-details-data');
 
-    feelsLikeIcon.innerHTML = "<img src='temperature.png'>"
-    humidityIcon.innerHTML = "<img src=''>"
-    rainChanceIcon.innerHTML = "<img src=''>"
-    windIcon.innerHTML = "<img src=''>"
+    feelsLikeIcon.innerHTML = "<img src='temperature.png' class='weather-details-icon'>";
+    humidityIcon.innerHTML = "<img src='humidity.png' class='weather-details-icon'>";
+    rainChanceIcon.innerHTML = "<img src='rain.png' class='weather-details-icon'>";
+    windIcon.innerHTML = "<img src='wind.png' class='weather-details-icon'>";
+    feelsLikeLabel.innerHTML = "Feels Like";
+    humidityLabel.innerHTML = "Humidity";
+    rainChanceLabel.innerHTML = "Chance of Rain";
+    windLabel.innerHTML = "Wind Speed";
+
+    getWeather('Celje')
+    .then(function(response) {
+        feelsLikeData.innerHTML = response.current.feelslike_c + " °C";
+        humidityData.innerHTML = response.current.humidity + " %";
+        rainChanceData.innerHTML = response.current.precip_in + " %";
+        windData.innerHTML = response.current.wind_kph + " km/h";
+    });
+
+    feelLikeInfo.appendChild(feelsLikeLabel);
+    feelLikeInfo.appendChild(feelsLikeData);
+    humidityInfo.appendChild(humidityLabel);
+    humidityInfo.appendChild(humidityData);
+    rainChanceInfo.appendChild(rainChanceLabel);
+    rainChanceInfo.appendChild(rainChanceData);
+    windInfo.appendChild(windLabel);
+    windInfo.appendChild(windData);
+
+    feelsLike.appendChild(feelsLikeIcon);
+    feelsLike.appendChild(feelLikeInfo);
+    humidity.appendChild(humidityIcon);
+    humidity.appendChild(humidityInfo);
+    rainChance.appendChild(rainChanceIcon);
+    rainChance.appendChild(rainChanceInfo);
+    wind.appendChild(windIcon);
+    wind.appendChild(windInfo);
+
+    weatherDetailsContainer.appendChild(feelsLike);
+    weatherDetailsContainer.appendChild(humidity);
+    weatherDetailsContainer.appendChild(rainChance);
+    weatherDetailsContainer.appendChild(wind);
+
 }
 createWeatherInfo();
+createWeatherDetails();
