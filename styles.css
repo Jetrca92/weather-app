@@ -119,3 +119,24 @@ main {
     font-weight: 600;
 }
 
+.forecast-daily-day {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.forecast-daily-temperature-high {
+    margin-bottom: 0.4rem;
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.forecast-daily-temperature-low {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.forecast-daily-icon {
+    margin-top: 2rem;
+    width: 4rem;
+}

@@ -6,7 +6,7 @@ function getWeather(city) {
     .catch(function(err) {
         console.log('Error!');
     });
-}
+};
 
 let forecastDays = [];
 
@@ -17,12 +17,12 @@ function getWeatherForecast(city) {
     })
     .then(function(response) {
         forecastDays = response.forecast.forecastday;
-        console.log(forecastDays);
+        createWeatherForecast();
     })
     .catch(function(err) {
         console.log('ErrorForecast!')
     });
-}
+};
 
 function createWeatherInfo() {
     const weatherInfo = document.querySelector('.weather-info');
@@ -39,11 +39,9 @@ function createWeatherInfo() {
     weatherTemperature.setAttribute('class', 'weather-temperature');
     weatherInfoIcon.setAttribute('class', 'weather-info-icon');
     searchLocation.setAttribute('class', 'search-location-div')
-
      
     getWeather('Celje')
     .then(function(response) {
-        console.log(response);
         weatherDescription.innerHTML = response.current.condition.text;
         weatherLocation.innerHTML = response.location.name;
         weatherDate.innerHTML = response.location.localtime;
@@ -58,7 +56,7 @@ function createWeatherInfo() {
     weatherInfo.appendChild(weatherTemperature);
     weatherInfo.appendChild(weatherInfoIcon);
     weatherInfo.appendChild(searchLocation);
-}
+};
 
 function createWeatherDetails() {
     const weatherDetailsContainer = document.querySelector('.weather-details-container');
@@ -145,8 +143,7 @@ function createWeatherDetails() {
     weatherDetailsContainer.appendChild(humidity);
     weatherDetailsContainer.appendChild(rainChance);
     weatherDetailsContainer.appendChild(wind);
-
-}
+};
 
 function createWeatherForecast() {
     const forecastDaily = document.createElement('div');
@@ -156,15 +153,18 @@ function createWeatherForecast() {
     const forecastDailyTemperatureLow = document.createElement('div');
     const forecastDailyIcon = document.createElement('div');
     
-    forecastDaily.setAttribute('class, forecast-daily');
+    forecastDaily.setAttribute('class', 'forecast-daily');
     forecastDailyDay.setAttribute('class', 'forecast-daily-day');
     forecastDailyTemperature.setAttribute('class', 'forecast-daily-temperature');
     forecastDailyTemperatureHigh.setAttribute('class', 'forecast-daily-temperature-high');
     forecastDailyTemperatureLow.setAttribute('class', 'forecast-daily-temperature-low');
     forecastDailyIcon.setAttribute('class', 'forecast-daily-icon');
-
     
-
-}
+    for (let i = 0; i < forecastDays.length; i++) {
+        console.log(forecastDays[i]);
+    } 
+};
+   
 createWeatherInfo();
 createWeatherDetails();
+getWeatherForecast('Celje');
