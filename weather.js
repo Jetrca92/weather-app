@@ -61,6 +61,18 @@ function createWeatherInfo() {
         createWeatherDetails();
         getWeatherForecast(city);
     })
+    // Add event listener to update city when enter key is pressed
+    searchLocationInput.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            city = searchLocationInput.value;
+            weatherInfo.innerHTML = "";
+            weatherDetailsContainer.innerHTML = "";
+            forecastContainer.innerHTML = "";
+            createWeatherInfo();
+            createWeatherDetails();
+            getWeatherForecast(city);
+        }
+    });
     
 
     getWeather(city)
