@@ -6,7 +6,7 @@ const forecastContainer = document.querySelector('.forecast-container');
 
 // Get current weather from api
 function getWeather(city) {
-    return fetch('http://api.weatherapi.com/v1/current.json?key=c72c34d241764345bb3103504231903&q=' + city + '&aqi=no', {mode: 'cors'})
+    return fetch('https://api.weatherapi.com/v1/current.json?key=c72c34d241764345bb3103504231903&q=' + city + '&aqi=no', {mode: 'cors'})
     .then(function(response) {
         return response.json();
     })
@@ -17,7 +17,7 @@ function getWeather(city) {
 
 // Get weather forecast (7 days) from api, store it in forecastDays array
 function getWeatherForecast(city) {
-    return fetch('http://api.weatherapi.com/v1/forecast.json?key=c72c34d241764345bb3103504231903&q=' + city + '&days=8&aqi=no&alerts=no', {mode: 'cors'})
+    return fetch('https://api.weatherapi.com/v1/forecast.json?key=c72c34d241764345bb3103504231903&q=' + city + '&days=8&aqi=no&alerts=no', {mode: 'cors'})
     .then(function(response) {
         return response.json();
     })
