@@ -1,5 +1,10 @@
 let city = 'Celje';
+let forecastDays = [];
+const weatherInfo = document.querySelector('.weather-info');
+const weatherDetailsContainer = document.querySelector('.weather-details-container');
+const forecastContainer = document.querySelector('.forecast-container');
 
+// Get current weather from api
 function getWeather(city) {
     return fetch('http://api.weatherapi.com/v1/current.json?key=c72c34d241764345bb3103504231903&q=' + city + '&aqi=no', {mode: 'cors'})
     .then(function(response) {
@@ -10,10 +15,9 @@ function getWeather(city) {
     });
 };
 
-let forecastDays = [];
-
+// Get weather forecast (7 days) from api, store it in forecastDays array
 function getWeatherForecast(city) {
-    return fetch('http://api.weatherapi.com/v1/forecast.json?key=c72c34d241764345bb3103504231903&q=' + city + '&days=7&aqi=no&alerts=no', {mode: 'cors'})
+    return fetch('http://api.weatherapi.com/v1/forecast.json?key=c72c34d241764345bb3103504231903&q=' + city + '&days=8&aqi=no&alerts=no', {mode: 'cors'})
     .then(function(response) {
         return response.json();
     })
@@ -22,26 +26,43 @@ function getWeatherForecast(city) {
         createWeatherForecast();
     })
     .catch(function(err) {
-        console.log('ErrorForecast!')
+        console.log('Error forecast!');
     });
 };
 
+// Create elements and populate with currect weather info
 function createWeatherInfo() {
-    const weatherInfo = document.querySelector('.weather-info');
     const weatherDescription = document.createElement('div');
     const weatherLocation = document.createElement('div');
     const weatherDate = document.createElement('div');
     const weatherTemperature = document.createElement('div');
     const weatherInfoIcon = document.createElement('div');
     const searchLocation = document.createElement('div');
+    const searchLocationInput = document.createElement('input');
+    const searchLocationIcon = document.createElement('div');
 
     weatherDescription.setAttribute('class', 'weather-description');
     weatherLocation.setAttribute('class', 'weather-location');
     weatherDate.setAttribute('class', 'weather-date');
     weatherTemperature.setAttribute('class', 'weather-temperature');
     weatherInfoIcon.setAttribute('class', 'weather-info-icon');
-    searchLocation.setAttribute('class', 'search-location-div')
-     
+    searchLocation.setAttribute('class', 'search-location-div');
+    searchLocationInput.setAttribute('class', 'search-location-input');
+    searchLocationInput.setAttribute('placeholder', 'Search Location...');
+    searchLocationIcon.setAttribute('class', 'search');
+
+    //Add event listener to search and change city
+    searchLocationIcon.addEventListener('click', function() {
+        city = searchLocationInput.value;
+        weatherInfo.innerHTML = "";
+        weatherDetailsContainer.innerHTML = "";
+        forecastContainer.innerHTML = "";
+        createWeatherInfo();
+        createWeatherDetails();
+        getWeatherForecast(city);
+    })
+    
+
     getWeather(city)
     .then(function(response) {
         weatherDescription.innerHTML = response.current.condition.text;
@@ -49,7 +70,6 @@ function createWeatherInfo() {
         weatherDate.innerHTML = response.location.localtime;
         weatherTemperature.innerHTML = response.current.temp_c + " °C";
         weatherInfoIcon.innerHTML = `<img class="icon" src="https:${response.current.condition.icon}">`;
-        searchLocation.innerHTML = '<input class="search-location-input" placeholder="Search Location..."></input><div class="search"></div>';
     });
 
     weatherInfo.appendChild(weatherDescription);
@@ -57,12 +77,13 @@ function createWeatherInfo() {
     weatherInfo.appendChild(weatherDate);
     weatherInfo.appendChild(weatherTemperature);
     weatherInfo.appendChild(weatherInfoIcon);
+    searchLocation.appendChild(searchLocationInput);
+    searchLocation.appendChild(searchLocationIcon);
     weatherInfo.appendChild(searchLocation);
 };
 
+// Create elements and populate current weather details
 function createWeatherDetails() {
-    const weatherDetailsContainer = document.querySelector('.weather-details-container');
-
     const feelsLike = document.createElement('div');
     const humidity = document.createElement('div');
     const rainChance = document.createElement('div');
@@ -147,9 +168,9 @@ function createWeatherDetails() {
     weatherDetailsContainer.appendChild(wind);
 };
 
+// Create elements and populate them for weather forecast
 function createWeatherForecast() {
-    for (let i = 0; i < forecastDays.length; i++) {
-        const forecast = document.querySelector('.forecast-container');
+    for (let i = 1; i < forecastDays.length + 1; i++) {
         const forecastDaily = document.createElement('div');
         const forecastDailyDay = document.createElement('div');
         const forecastDailyTemperature = document.createElement('div');
@@ -173,7 +194,7 @@ function createWeatherForecast() {
         forecastDailyTemperature.appendChild(forecastDailyTemperatureLow);
         forecastDaily.appendChild(forecastDailyTemperature);
         forecastDaily.appendChild(forecastDailyIcon);
-        forecast.appendChild(forecastDaily);
+        forecastContainer.appendChild(forecastDaily);
     } 
 };
    
