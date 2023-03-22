@@ -8,6 +8,21 @@ function getWeather(city) {
     });
 }
 
+let forecastDays = [];
+
+function getWeatherForecast(city) {
+    return fetch('http://api.weatherapi.com/v1/forecast.json?key=c72c34d241764345bb3103504231903&q=' + city + '&days=7&aqi=no&alerts=no', {mode: 'cors'})
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(response) {
+        forecastDays = response.forecast.forecastday;
+        console.log(forecastDays);
+    })
+    .catch(function(err) {
+        console.log('ErrorForecast!')
+    });
+}
 
 function createWeatherInfo() {
     const weatherInfo = document.querySelector('.weather-info');
@@ -130,6 +145,25 @@ function createWeatherDetails() {
     weatherDetailsContainer.appendChild(humidity);
     weatherDetailsContainer.appendChild(rainChance);
     weatherDetailsContainer.appendChild(wind);
+
+}
+
+function createWeatherForecast() {
+    const forecastDaily = document.createElement('div');
+    const forecastDailyDay = document.createElement('div');
+    const forecastDailyTemperature = document.createElement('div');
+    const forecastDailyTemperatureHigh = document.createElement('div');
+    const forecastDailyTemperatureLow = document.createElement('div');
+    const forecastDailyIcon = document.createElement('div');
+    
+    forecastDaily.setAttribute('class, forecast-daily');
+    forecastDailyDay.setAttribute('class', 'forecast-daily-day');
+    forecastDailyTemperature.setAttribute('class', 'forecast-daily-temperature');
+    forecastDailyTemperatureHigh.setAttribute('class', 'forecast-daily-temperature-high');
+    forecastDailyTemperatureLow.setAttribute('class', 'forecast-daily-temperature-low');
+    forecastDailyIcon.setAttribute('class', 'forecast-daily-icon');
+
+    
 
 }
 createWeatherInfo();
